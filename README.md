@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Smart Mobile Phone Sales & Inventory Management System
 > **MCA Advanced Database Management Systems (ADBMS) Project**  
 > Built with Node.js, Express.js, MySQL 8.0, Bootstrap 5, and Chart.js.
@@ -225,3 +226,6 @@ smart-mobile-sales/
 ├── package.json            # Node.js project manifest & scripts
 └── README.md               # Project documentation
 ```
+=======
+# adbms_mobile-management
+>>>>>>> 0c6a8357e08deac4edd271de098967fdd5962bbe
