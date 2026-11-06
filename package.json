@@ -1,0 +1,30 @@
+{
+  "name": "smart-mobile-sales-inventory-system",
+  "version": "1.0.0",
+  "description": "Smart Mobile Phone Sales & Inventory Management System - MCA ADBMS Project",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "db:init": "node database/init-db.js"
+  },
+  "keywords": [
+    "adbms",
+    "mca",
+    "mysql",
+    "express",
+    "inventory-management",
+    "mobile-sales"
+  ],
+  "author": "Carren",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

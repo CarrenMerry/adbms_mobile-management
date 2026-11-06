@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports | Smart Mobile Phone Sales & Inventory Management System</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="appSidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">
+                <i class="bi bi-phone"></i>
+            </div>
+            <div>
+                <h6 class="brand-title">SmartMobile</h6>
+                <p class="brand-subtitle">ADBMS Management</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-label">Core Modules</div>
+            <a href="dashboard.html" class="nav-link">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="products.html" class="nav-link">
+                <i class="bi bi-phone"></i>
+                <span>Products</span>
+            </a>
+            <a href="customers.html" class="nav-link">
+                <i class="bi bi-people"></i>
+                <span>Customers</span>
+            </a>
+            <a href="employees.html" class="nav-link">
+                <i class="bi bi-person-badge"></i>
+                <span>Employees</span>
+            </a>
+
+            <div class="nav-section-label">Operations</div>
+            <a href="orders.html" class="nav-link">
+                <i class="bi bi-receipt"></i>
+                <span>Sales Orders</span>
+            </a>
+            <a href="order-items.html" class="nav-link">
+                <i class="bi bi-list-check"></i>
+                <span>Order Items</span>
+            </a>
+            <a href="inventory.html" class="nav-link">
+                <i class="bi bi-box-seam"></i>
+                <span>Inventory</span>
+            </a>
+
+            <div class="nav-section-label">Database & Analytics</div>
+            <a href="reports.html" class="nav-link active">
+                <i class="bi bi-bar-chart-line"></i>
+                <span>Reports</span>
+            </a>
+            <a href="analytics.html" class="nav-link">
+                <i class="bi bi-database-check"></i>
+                <span>SQL Analytics</span>
+            </a>
+            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                <i class="bi bi-sliders"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile-badge">
+                <div class="user-avatar" id="sidebarUserAvatar">AD</div>
+                <div class="user-info">
+                    <p class="user-name" id="sidebarUserName">Administrator</p>
+                    <p class="user-role" id="sidebarUserRole">System Admin</p>
+                </div>
+                <a href="#" id="logoutBtn" class="text-danger ms-auto fs-5" title="Sign Out">
+                    <i class="bi bi-box-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+        <header class="top-navbar">
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-outline-custom d-lg-none btn-icon-sm" id="sidebarToggleBtn">
+                    <i class="bi bi-list fs-5"></i>
+                </button>
+                <h1 class="page-header-title">
+                    <i class="bi bi-bar-chart-line"></i>
+                    <span>Relational Database Reports (SQL Aggregates)</span>
+                </h1>
+            </div>
+
+            <div class="top-navbar-actions">
+                <button class="btn btn-outline-custom" onclick="window.print()">
+                    <i class="bi bi-printer me-1"></i> Print Reports
+                </button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Nav Tabs for 10 Reports -->
+            <ul class="nav nav-pills mb-4 bg-white p-2 rounded-3 border" id="reportsTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active rounded-pill px-3 py-1 small fw-semibold" id="sales-tab" data-bs-toggle="tab" data-bs-target="#sales-tab-pane" type="button">
+                        1. Sales Revenue & Date
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-pill px-3 py-1 small fw-semibold" id="products-tab" data-bs-toggle="tab" data-bs-target="#products-tab-pane" type="button">
+                        2. Best Selling & Brands
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-pill px-3 py-1 small fw-semibold" id="customers-tab" data-bs-toggle="tab" data-bs-target="#customers-tab-pane" type="button">
+                        3. Customer Spending
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-pill px-3 py-1 small fw-semibold" id="employees-tab" data-bs-toggle="tab" data-bs-target="#employees-tab-pane" type="button">
+                        4. Employee Performance
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-pill px-3 py-1 small fw-semibold" id="payments-tab" data-bs-toggle="tab" data-bs-target="#payments-tab-pane" type="button">
+                        5. Payment & Order Stats
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="reportsTabContent">
+                <!-- Tab 1: Sales Revenue Summary & Sales by Date -->
+                <div class="tab-pane fade show active" id="sales-tab-pane" role="tabpanel">
+                    <div class="row g-3 mb-4" id="salesSummaryCards">
+                        <!-- Populated via JS -->
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <h2 class="card-header-title">
+                                <i class="bi bi-calendar-event"></i>
+                                <span>Report 5: Sales Revenue Aggregated by Date</span>
+                            </h2>
+                            <span class="badge bg-light text-muted border font-monospace">GROUP BY DATE(order_date) ORDER BY sale_date DESC</span>
+                        </div>
+                        <div class="card-body-custom p-0">
+                            <div class="table-responsive-custom">
+                                <table class="table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>Sale Date</th>
+                                            <th>Orders Count</th>
+                                            <th>Daily Revenue</th>
+                                            <th>Average Order Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="salesByDateTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Best Selling Phones & Brand Sales & Low Stock -->
+                <div class="tab-pane fade" id="products-tab-pane" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-lg-7">
+                            <div class="content-card">
+                                <div class="card-header-custom">
+                                    <h2 class="card-header-title">
+                                        <i class="bi bi-trophy"></i>
+                                        <span>Report 3: Best Selling Mobile Phones</span>
+                                    </h2>
+                                    <span class="badge bg-light text-muted border font-monospace">SUM(quantity) ORDER BY units DESC</span>
+                                </div>
+                                <div class="card-body-custom p-0">
+                                    <div class="table-responsive-custom">
+                                        <table class="table-custom">
+                                            <thead>
+                                                <tr>
+                                                    <th>Model</th>
+                                                    <th>Stock Left</th>
+                                                    <th>Units Sold</th>
+                                                    <th>Revenue Generated</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="bestSellingTableBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5">
+                            <div class="content-card">
+                                <div class="card-header-custom">
+                                    <h2 class="card-header-title">
+                                        <i class="bi bi-pie-chart"></i>
+                                        <span>Report 4: Sales by Brand</span>
+                                    </h2>
+                                    <span class="badge bg-light text-muted border font-monospace">GROUP BY brand</span>
+                                </div>
+                                <div class="card-body-custom p-0">
+                                    <div class="table-responsive-custom">
+                                        <table class="table-custom">
+                                            <thead>
+                                                <tr>
+                                                    <th>Brand</th>
+                                                    <th>Units Sold</th>
+                                                    <th>Total Sales</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="brandSalesTableBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="content-card">
+                                <div class="card-header-custom">
+                                    <h2 class="card-header-title text-warning">
+                                        <i class="bi bi-exclamation-triangle"></i>
+                                        <span>Report 8: Low Stock Alert Products</span>
+                                    </h2>
+                                </div>
+                                <div class="card-body-custom p-0">
+                                    <div class="table-responsive-custom">
+                                        <table class="table-custom">
+                                            <thead>
+                                                <tr>
+                                                    <th>Model</th>
+                                                    <th>Available</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="reportLowStockTableBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Customer Spending & Repeat Buyers -->
+                <div class="tab-pane fade" id="customers-tab-pane" role="tabpanel">
+                    <div class="content-card mb-4">
+                        <div class="card-header-custom">
+                            <h2 class="card-header-title">
+                                <i class="bi bi-person-check"></i>
+                                <span>Report 6: Customer Spending Breakdown</span>
+                            </h2>
+                            <span class="badge bg-light text-muted border font-monospace">LEFT JOIN SALES_ORDER GROUP BY customer_id ORDER BY total_spent DESC</span>
+                        </div>
+                        <div class="card-body-custom p-0">
+                            <div class="table-responsive-custom">
+                                <table class="table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>Customer ID</th>
+                                            <th>Name</th>
+                                            <th>Contact Phone</th>
+                                            <th>Orders Count</th>
+                                            <th>Total Spent</th>
+                                            <th>Avg Order Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="customerSpendingTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <h2 class="card-header-title text-success">
+                                <i class="bi bi-repeat"></i>
+                                <span>Repeat High-Value Customers (HAVING Clause Demo)</span>
+                            </h2>
+                            <span class="badge bg-light text-success border font-monospace">HAVING COUNT(order_id) &gt; 1</span>
+                        </div>
+                        <div class="card-body-custom p-0">
+                            <div class="table-responsive-custom">
+                                <table class="table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>Customer Name</th>
+                                            <th>Contact Phone</th>
+                                            <th>Orders Placed</th>
+                                            <th>Total Spent</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="repeatCustomersTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Employee Performance -->
+                <div class="tab-pane fade" id="employees-tab-pane" role="tabpanel">
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <h2 class="card-header-title">
+                                <i class="bi bi-award"></i>
+                                <span>Report 7: Employee Sales Performance Evaluation</span>
+                            </h2>
+                            <span class="badge bg-light text-muted border font-monospace">LEFT JOIN SALES_ORDER GROUP BY employee_id ORDER BY total_sales_volume DESC</span>
+                        </div>
+                        <div class="card-body-custom p-0">
+                            <div class="table-responsive-custom">
+                                <table class="table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>Employee ID</th>
+                                            <th>Staff Member</th>
+                                            <th>Designation</th>
+                                            <th>Orders Handled</th>
+                                            <th>Total Sales Generated</th>
+                                            <th>Avg Ticket Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="employeePerformanceTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 5: Payment Methods & Order Status Statistics -->
+                <div class="tab-pane fade" id="payments-tab-pane" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="content-card">
+                                <div class="card-header-custom">
+                                    <h2 class="card-header-title">
+                                        <i class="bi bi-credit-card"></i>
+                                        <span>Report 9: Payment Method Statistics</span>
+                                    </h2>
+                                    <span class="badge bg-light text-muted border font-monospace">GROUP BY payment_method</span>
+                                </div>
+                                <div class="card-body-custom p-0">
+                                    <div class="table-responsive-custom">
+                                        <table class="table-custom">
+                                            <thead>
+                                                <tr>
+                                                    <th>Payment Method</th>
+                                                    <th>Transactions</th>
+                                                    <th>Total Amount Collected</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="paymentMethodsTableBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="content-card">
+                                <div class="card-header-custom">
+                                    <h2 class="card-header-title">
+                                        <i class="bi bi-check2-all"></i>
+                                        <span>Report 10: Order Status Statistics</span>
+                                    </h2>
+                                    <span class="badge bg-light text-muted border font-monospace">GROUP BY order_status</span>
+                                </div>
+                                <div class="card-body-custom p-0">
+                                    <div class="table-responsive-custom">
+                                        <table class="table-custom">
+                                            <thead>
+                                                <tr>
+                                                    <th>Order Status</th>
+                                                    <th>Orders Count</th>
+                                                    <th>Cumulative Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="orderStatusesTableBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<div id="toastContainer" class="toast-container-custom"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/reports.js"></script>
+</body>
+</html>
