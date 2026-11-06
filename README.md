@@ -1,1 +1,0 @@
-# adbms_mobile-management
